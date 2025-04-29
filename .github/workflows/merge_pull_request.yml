@@ -3,6 +3,8 @@ name: Auto Approve and Merge
 on:
   repository_dispatch:
     types: [trigger-auto-merge]
+  pull_request:
+    types: [opened, reopened, synchronize, labeled]
 
 jobs:
   approve-and-merge:
