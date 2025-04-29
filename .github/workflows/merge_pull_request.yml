@@ -14,9 +14,6 @@ jobs:
       - name: Run Tests
         run: echo "Aquí irían tus tests o validaciones"
 
-      - name: Debug Pull Request Number
-        run: echo "Pull Request Number: ${{ github.event.pull_request.number }}"
-
       - name: Enable Auto-Merge
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
