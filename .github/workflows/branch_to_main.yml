@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create Pull Request
+        id: create-pr
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
@@ -20,3 +21,11 @@ jobs:
           title: "Cambios desde ${{ github.ref_name }}"
           body: "Pull request automático para mergear cambios desde ${{ github.ref_name }}"
           labels: "automatic-pr"
+
+      - name: Trigger Auto-Merge Workflow
+        if: steps.create-pr.outputs.pull-request-number
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          event-type: trigger-auto-merge
+          client-payload: '{"pr_number": "${{ steps.create-pr.outputs.pull-request-number }}"}'
