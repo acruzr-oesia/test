@@ -3,6 +3,8 @@ name: Auto Approve and Merge
 on:
   pull_request:
     types: [opened, reopened, synchronize, labeled]
+  repository_dispatch:
+    types: [automatic-pr]
 
 jobs:
   approve-and-merge:
