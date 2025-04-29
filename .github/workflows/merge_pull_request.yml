@@ -1,0 +1,22 @@
+name: Auto Approve and Merge
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, labeled]
+
+jobs:
+  approve-and-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Tests
+        run: echo "Aquí irían tus tests o validaciones"
+
+      - name: Enable Auto-Merge
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: "SQUASH"
