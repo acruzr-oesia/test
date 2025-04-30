@@ -15,6 +15,12 @@ on:
       - ready_for_review
       - reopened
       - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
       
 jobs:
   approve-and-merge:
