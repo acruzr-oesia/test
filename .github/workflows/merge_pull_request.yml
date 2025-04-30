@@ -32,7 +32,7 @@ jobs:
           echo "pr_number=$(jq -r '.client_payload.pr_number' <<< '${{ toJSON(github.event.client_payload) }}')" >> $GITHUB_OUTPUT
 
       - name: Approve Pull Request
-        uses: peter-evans/approve-pull-request@v4
+        uses: peter-evans/approve-pull-request@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
           pull-request-number: ${{ steps.extract-pr-number.outputs.pr_number }}
