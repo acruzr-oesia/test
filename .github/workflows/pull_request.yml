@@ -1,0 +1,35 @@
+name: Auto Pull Request
+
+on:
+  push:
+    branches: 
+      - release/*
+      - new-branch
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          base: main  
+          title: "Cambios desde ${{ github.ref_name }}"
+          body: "Pull request automático para mergear cambios desde ${{ github.ref_name }}"
+          labels: "automatic-pr"
+
+      - name: Check Condition
+        if: steps.create-pr.outputs.pull-request-number
+        run: echo "entra"
+        
+      - name: Approve Pull Request
+        if: steps.create-pr.outputs.pull-request-number
+        uses: peter-evans/approve-pull-request@v4
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
