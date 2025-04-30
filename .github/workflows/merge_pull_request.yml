@@ -2,10 +2,20 @@ name: Auto Approve and Merge
 
 on:
   repository_dispatch:
-    types: [trigger-auto-merge]
+    types: 
+      - trigger-auto-merge
+      - create-pr
   pull_request:
-    types: [opened, reopened, synchronize, labeled]
-
+    types: 
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+      
 jobs:
   approve-and-merge:
     runs-on: ubuntu-latest
