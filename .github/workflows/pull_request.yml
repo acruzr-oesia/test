@@ -15,13 +15,12 @@ jobs:
 
       - name: Create Pull Request
         id: create-pr
-        uses: peter-evans/create-pull-request@v4
+        uses: repo-sync/pull-request@v2
         with:
-          token: ${{ secrets.GH_TOKEN }}
-          base: main  
-          title: "Cambios desde ${{ github.ref_name }}"
-          body: "Pull request automático para mergear cambios desde ${{ github.ref_name }}"
-          labels: "automatic-pr"
+          destination_branch: main  
+          github_token: ${{ secrets.GH_TOKEN }}
+          pr_label: "feature, automated pr"
+          pr_title: "[Example] Simple demo"
 
       - name: Check Condition
         if: steps.create-pr.outputs.pull-request-number
