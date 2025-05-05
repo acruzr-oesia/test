@@ -14,7 +14,7 @@
 import mlflow
 
 # Set given experiment as the active experiment. If an experiment with this name does not exist, a new experiment with this name is created.
-mlflow.set_experiment("experiment_prueba")
+# mlflow.set_experiment("experiment_prueba")
 
 
 # METADATA ********************
@@ -145,7 +145,7 @@ client = MlflowClient()
 model_versions = client.search_model_versions(f"name='{model_name}'")
 
 # Mostrar las versiones del modelo ACTUALIZACIÓN
-print("hola buenas")
+print("hola buenasss")
 for version in model_versions:
     print(f"Versión: {version.version}, Estado: {version.current_stage}, URI: {version.source}")
 

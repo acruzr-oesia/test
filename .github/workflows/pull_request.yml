@@ -28,7 +28,8 @@ jobs:
         
       - name: Approve Pull Request
         if: steps.create-pr.outputs.pull-request-number
-        uses: peter-evans/approve-pull-request@v4
+        uses: peter-evans/approve-pull-request@v3  # Updated version
         with:
           github-token: ${{ secrets.GH_TOKEN }}
           pull-request-number: ${{ steps.create-pr.outputs.pull-request-number }}
+
