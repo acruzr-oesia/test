@@ -1,8 +1,7 @@
-name: Auto Approve and Merge
-
+name: automerge
 on:
   pull_request:
-    types: 
+    types:
       - labeled
       - unlabeled
       - synchronize
@@ -17,19 +16,19 @@ on:
   check_suite:
     types:
       - completed
-      
+  status: {}
 jobs:
-  approve-and-merge:
+  automerge:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - name: Approve Pull Request
-        env: 
-          GITHUB_TOKEN: ${{ secrets.PAT_APPROVER }}
-        run: |
-          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          echo "Pull Request Number: $PR_NUMBER"
-          curl -s -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/reviews \
-            -d '{"event":"APPROVE"}'
+      - id: automerge
+        name: automerge
+        uses: pascalgn/automerge-action@v0.16.4
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "automerge,!wip,!work in progress"
+          MERGE_METHOD: "squash"
+          MERGE_REQUIRED_APPROVALS: "1"
